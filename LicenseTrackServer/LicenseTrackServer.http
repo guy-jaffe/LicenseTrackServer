@@ -1,0 +1,6 @@
+@LicenseTrackServer_HostAddress = http://localhost:5070
+
+GET {{LicenseTrackServer_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
