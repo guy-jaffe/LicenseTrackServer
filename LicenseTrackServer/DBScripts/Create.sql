@@ -75,7 +75,7 @@ CREATE TABLE students
 -- יצירת טבלת images
 CREATE TABLE images 
 (
-    id INT PRIMARY KEY Identity,
+    id INT PRIMARY KEY,
     file_extension VARCHAR(50)
 );
 
@@ -103,7 +103,7 @@ CREATE TABLE teacher_work_hours
     PRIMARY KEY (teacher_id, date, start_time)  -- קביעת מפתח ראשי המורכב ממורה, תאריך ושעת התחלה
 );
 
-Insert Into AppUsers Values('admin', 'admin', '1234', 'הוד השרון', 1, 1)
+Insert Into users Values('admin', 'admin', '1234', N'הוד השרון', 1, 1)
 Go
 -- Create a login for the admin user
 CREATE LOGIN [LicenseTrackAdminLogin] WITH PASSWORD = 'admin123';
