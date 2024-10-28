@@ -11,7 +11,8 @@ Use LicenseTrackDB
 Go
 
 
--- scaffold-DbContext "Server = (localdb)\MSSQLLocalDB;Initial Catalog=LicenseTrackDB;User ID=LicenseTrackAdminLogin;Password=thePassword;" Microsoft.EntityFrameworkCore.SqlServer -OutPutDir Models -Context LicenseTrackDbContext -DataAnnotations –force
+-- 
+
 
 
 -- יצירת טבלת users
@@ -88,3 +89,8 @@ ALTER ROLE db_owner ADD MEMBER [LicenseTrackAdminUser];
 Go
 
 select * from users
+
+/*
+scaffold-DbContext "Server = (localdb)\MSSQLLocalDB;Initial Catalog=LicenseTrackDB;User ID=LicenseTrackAdminLogin;Password=admin123;" Microsoft.EntityFrameworkCore.SqlServer -OutPutDir Models -Context LicenseTrackDbContext -DataAnnotations –force
+
+*/
