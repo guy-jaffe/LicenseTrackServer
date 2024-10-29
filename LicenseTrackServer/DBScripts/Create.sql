@@ -10,15 +10,11 @@ Go
 Use LicenseTrackDB
 Go
 
-
--- 
-
-
-
 -- יצירת טבלת users
 CREATE TABLE users 
 (
     id INT PRIMARY KEY Identity,
+    email NVARCHAR(250) NOT NULL,
     first_name NVARCHAR(50) NOT NULL,
     last_name NVARCHAR(50) NOT NULL,
     pass NVARCHAR(50) NOT NULL,
@@ -74,7 +70,7 @@ CREATE TABLE teacher_work_hours
 );
 
 
-Insert Into users Values('admin', 'admin', '1234', N'הוד השרון', 'png', 1)
+Insert Into users Values('email@12.com','admin', 'admin', '1234', N'הוד השרון', 'png', 1)
 Go
 -- Create a login for the admin user
 CREATE LOGIN [LicenseTrackAdminLogin] WITH PASSWORD = 'admin123';

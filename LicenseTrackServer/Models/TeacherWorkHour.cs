@@ -16,7 +16,7 @@ public partial class TeacherWorkHour
 
     [Key]
     [Column("dayDate")]
-    public DateTime DayDate { get; set; }
+    public DateOnly DayDate { get; set; }
 
     [Key]
     [Column("start_time")]

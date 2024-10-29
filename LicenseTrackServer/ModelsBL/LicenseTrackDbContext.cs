@@ -6,5 +6,6 @@ namespace LicenseTrackServer.Models;
 
 public partial class LicenseTrackDbContext : DbContext
 {
+    
 }
 

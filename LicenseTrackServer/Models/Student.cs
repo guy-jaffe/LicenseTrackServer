@@ -21,7 +21,7 @@ public partial class Student
     public string? Street { get; set; }
 
     [Column("license_acquisition_date")]
-    public DateTime LicenseAcquisitionDate { get; set; }
+    public DateOnly? LicenseAcquisitionDate { get; set; }
 
     [Column("license_status")]
     public int? LicenseStatus { get; set; }

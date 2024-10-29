@@ -13,6 +13,10 @@ public partial class User
     [Column("id")]
     public int Id { get; set; }
 
+    [Column("email")]
+    [StringLength(250)]
+    public string Email { get; set; } = null!;
+
     [Column("first_name")]
     [StringLength(50)]
     public string FirstName { get; set; } = null!;
