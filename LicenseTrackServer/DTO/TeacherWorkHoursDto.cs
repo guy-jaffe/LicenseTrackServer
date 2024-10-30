@@ -3,7 +3,7 @@
     public class TeacherWorkHoursDto
     {
         public int TeacherId { get; set; }
-        public DateTime DayDate { get; set; }
+        public DateOnly DayDate { get; set; }
         public TimeOnly StartTime { get; set; }
         public TimeOnly? EndTime { get; set; }
 

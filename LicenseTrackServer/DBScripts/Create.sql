@@ -13,60 +13,60 @@ Go
 -- יצירת טבלת users
 CREATE TABLE users 
 (
-    id INT PRIMARY KEY Identity,
-    email NVARCHAR(250) NOT NULL,
-    first_name NVARCHAR(50) NOT NULL,
-    last_name NVARCHAR(50) NOT NULL,
-    pass NVARCHAR(50) NOT NULL,
-    city NVARCHAR(50),
-    file_extension NVARCHAR(50),
+    Id INT PRIMARY KEY Identity,
+    Email NVARCHAR(250) NOT NULL,
+    First_name NVARCHAR(50) NOT NULL,
+    Last_name NVARCHAR(50) NOT NULL,
+    Pass NVARCHAR(50) NOT NULL,
+    City NVARCHAR(50),
+    File_extension NVARCHAR(50),
     IsManager BIT NOT NULL DEFAULT 0
 );
 
 -- יצירת טבלת teachers
 CREATE TABLE teachers 
 (
-    id INT PRIMARY KEY,
-    school_name NVARCHAR(50),
-    manual_car BIT,
-    vehicle_type NVARCHAR(50),
-    teaching_area NVARCHAR(50),
+    Id INT PRIMARY KEY,
+    School_name NVARCHAR(50),
+    Manual_car BIT,
+    Vehicle_type NVARCHAR(50),
+    Teaching_area NVARCHAR(50),
     ConfirmationStatus BIT
 );
 
 -- יצירת טבלת students
 CREATE TABLE students 
 (
-    id INT PRIMARY KEY,
-    lesson_count INT,
-    street NVARCHAR(50),
-    license_acquisition_date DATE,
-    license_status INT -- 'בתיאוריה', 'בשיעורים', 'עם רישיון'
+    Id INT PRIMARY KEY,
+    Lesson_count INT,
+    Street NVARCHAR(50),
+    License_acquisition_date DATE,
+    License_status INT -- 'בתיאוריה', 'בשיעורים', 'עם רישיון'
 );
 
 -- יצירת טבלת lessons
 CREATE TABLE lessons 
 (
-    id INT PRIMARY KEY Identity,
-    lessonDate DATE,
-    lessonTime TIME,
-    lessonType NVARCHAR(50),
-    student_id INT,
-    instructor_id INT,
-    comments TEXT,
-    FOREIGN KEY (student_id) REFERENCES students(id),
-    FOREIGN KEY (instructor_id) REFERENCES teachers(id)
+    Id INT PRIMARY KEY Identity,
+    LessonDate DATE,
+    LessonTime TIME,
+    LessonType NVARCHAR(50),
+    Student_id INT,
+    Instructor_id INT,
+    Comments TEXT,
+    FOREIGN KEY (Student_id) REFERENCES students(Id),
+    FOREIGN KEY (Instructor_id) REFERENCES teachers(Id)
 );
 
 -- יצירת טבלת teacher_work_hours
 CREATE TABLE teacher_work_hours 
 (
-    teacher_id INT,
-    dayDate DATE,
-    start_time TIME,
-    end_time TIME,
-    PRIMARY KEY (teacher_id, dayDate, start_time),
-    FOREIGN KEY (teacher_id) REFERENCES teachers(id)
+    Teacher_id INT,
+    DayDate DATE,
+    Start_time TIME,
+    End_time TIME,
+    PRIMARY KEY (Teacher_id, DayDate, Start_time),
+    FOREIGN KEY (Teacher_id) REFERENCES teachers(Id)
 );
 
 

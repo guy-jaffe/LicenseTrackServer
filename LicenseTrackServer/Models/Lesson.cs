@@ -10,26 +10,22 @@ namespace LicenseTrackServer.Models;
 public partial class Lesson
 {
     [Key]
-    [Column("id")]
     public int Id { get; set; }
 
-    [Column("lessonDate")]
     public DateOnly? LessonDate { get; set; }
 
-    [Column("lessonTime")]
     public TimeOnly? LessonTime { get; set; }
 
-    [Column("lessonType")]
     [StringLength(50)]
     public string? LessonType { get; set; }
 
-    [Column("student_id")]
+    [Column("Student_id")]
     public int? StudentId { get; set; }
 
-    [Column("instructor_id")]
+    [Column("Instructor_id")]
     public int? InstructorId { get; set; }
 
-    [Column("comments", TypeName = "text")]
+    [Column(TypeName = "text")]
     public string? Comments { get; set; }
 
     [ForeignKey("InstructorId")]

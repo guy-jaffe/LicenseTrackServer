@@ -10,30 +10,26 @@ namespace LicenseTrackServer.Models;
 public partial class User
 {
     [Key]
-    [Column("id")]
     public int Id { get; set; }
 
-    [Column("email")]
     [StringLength(250)]
     public string Email { get; set; } = null!;
 
-    [Column("first_name")]
+    [Column("First_name")]
     [StringLength(50)]
     public string FirstName { get; set; } = null!;
 
-    [Column("last_name")]
+    [Column("Last_name")]
     [StringLength(50)]
     public string LastName { get; set; } = null!;
 
-    [Column("pass")]
     [StringLength(50)]
     public string Pass { get; set; } = null!;
 
-    [Column("city")]
     [StringLength(50)]
     public string? City { get; set; }
 
-    [Column("file_extension")]
+    [Column("File_extension")]
     [StringLength(50)]
     public string? FileExtension { get; set; }
 

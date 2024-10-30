@@ -10,20 +10,18 @@ namespace LicenseTrackServer.Models;
 public partial class Student
 {
     [Key]
-    [Column("id")]
     public int Id { get; set; }
 
-    [Column("lesson_count")]
+    [Column("Lesson_count")]
     public int? LessonCount { get; set; }
 
-    [Column("street")]
     [StringLength(50)]
     public string? Street { get; set; }
 
-    [Column("license_acquisition_date")]
+    [Column("License_acquisition_date")]
     public DateOnly? LicenseAcquisitionDate { get; set; }
 
-    [Column("license_status")]
+    [Column("License_status")]
     public int? LicenseStatus { get; set; }
 
     [InverseProperty("Student")]

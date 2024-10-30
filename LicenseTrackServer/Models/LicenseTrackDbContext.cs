@@ -33,39 +33,39 @@ public partial class LicenseTrackDbContext : DbContext
     {
         modelBuilder.Entity<Lesson>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PK__lessons__3213E83F55E3CFD8");
+            entity.HasKey(e => e.Id).HasName("PK__lessons__3214EC07D2E3D204");
 
-            entity.HasOne(d => d.Instructor).WithMany(p => p.Lessons).HasConstraintName("FK__lessons__instruc__2C3393D0");
+            entity.HasOne(d => d.Instructor).WithMany(p => p.Lessons).HasConstraintName("FK__lessons__Instruc__2C3393D0");
 
-            entity.HasOne(d => d.Student).WithMany(p => p.Lessons).HasConstraintName("FK__lessons__student__2B3F6F97");
+            entity.HasOne(d => d.Student).WithMany(p => p.Lessons).HasConstraintName("FK__lessons__Student__2B3F6F97");
         });
 
         modelBuilder.Entity<Student>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PK__students__3213E83F3074D1FA");
+            entity.HasKey(e => e.Id).HasName("PK__students__3214EC07B4764405");
 
             entity.Property(e => e.Id).ValueGeneratedNever();
         });
 
         modelBuilder.Entity<Teacher>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PK__teachers__3213E83F4F1CE1AE");
+            entity.HasKey(e => e.Id).HasName("PK__teachers__3214EC072DC68A75");
 
             entity.Property(e => e.Id).ValueGeneratedNever();
         });
 
         modelBuilder.Entity<TeacherWorkHour>(entity =>
         {
-            entity.HasKey(e => new { e.TeacherId, e.DayDate, e.StartTime }).HasName("PK__teacher___2D51369E76572386");
+            entity.HasKey(e => new { e.TeacherId, e.DayDate, e.StartTime }).HasName("PK__teacher___D6D95F484353F219");
 
             entity.HasOne(d => d.Teacher).WithMany(p => p.TeacherWorkHours)
                 .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK__teacher_w__teach__2F10007B");
+                .HasConstraintName("FK__teacher_w__Teach__2F10007B");
         });
 
         modelBuilder.Entity<User>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PK__users__3213E83FC533E11D");
+            entity.HasKey(e => e.Id).HasName("PK__users__3214EC07DD59A349");
         });
 
         OnModelCreatingPartial(modelBuilder);

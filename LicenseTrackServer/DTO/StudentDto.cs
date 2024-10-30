@@ -5,7 +5,7 @@
         public int Id { get; set; }
         public int? LessonCount { get; set; }
         public string Street { get; set; }
-        public DateTime LicenseAcquisitionDate { get; set; }
+        public DateOnly? LicenseAcquisitionDate { get; set; }
         public int? LicenseStatus { get; set; } // Consider using an enum for better clarity
 
         public StudentDto() { }

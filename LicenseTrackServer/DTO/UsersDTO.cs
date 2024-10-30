@@ -3,6 +3,7 @@
     public class UsersDTO
     {
         public int Id { get; set; }
+        public string Email { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string PasswordHash { get; set; }
@@ -16,6 +17,7 @@
         public UsersDTO(Models.User modelUser)
         {
             this.Id = modelUser.Id;
+            this.Email = modelUser.Email;
             this.FirstName = modelUser.FirstName;
             this.LastName = modelUser.LastName;
             this.PasswordHash = modelUser.Pass;
@@ -29,6 +31,7 @@
             Models.User modelUser = new Models.User()
             {
                 Id = this.Id,
+                Email = this.Email,
                 FirstName = this.FirstName,
                 LastName = this.LastName,
                 Pass = this.PasswordHash,

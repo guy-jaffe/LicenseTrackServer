@@ -11,18 +11,17 @@ namespace LicenseTrackServer.Models;
 public partial class TeacherWorkHour
 {
     [Key]
-    [Column("teacher_id")]
+    [Column("Teacher_id")]
     public int TeacherId { get; set; }
 
     [Key]
-    [Column("dayDate")]
     public DateOnly DayDate { get; set; }
 
     [Key]
-    [Column("start_time")]
+    [Column("Start_time")]
     public TimeOnly StartTime { get; set; }
 
-    [Column("end_time")]
+    [Column("End_time")]
     public TimeOnly? EndTime { get; set; }
 
     [ForeignKey("TeacherId")]

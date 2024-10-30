@@ -10,21 +10,20 @@ namespace LicenseTrackServer.Models;
 public partial class Teacher
 {
     [Key]
-    [Column("id")]
     public int Id { get; set; }
 
-    [Column("school_name")]
+    [Column("School_name")]
     [StringLength(50)]
     public string? SchoolName { get; set; }
 
-    [Column("manual_car")]
+    [Column("Manual_car")]
     public bool? ManualCar { get; set; }
 
-    [Column("vehicle_type")]
+    [Column("Vehicle_type")]
     [StringLength(50)]
     public string? VehicleType { get; set; }
 
-    [Column("teaching_area")]
+    [Column("Teaching_area")]
     [StringLength(50)]
     public string? TeachingArea { get; set; }
 
