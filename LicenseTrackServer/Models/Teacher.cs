@@ -29,6 +29,10 @@ public partial class Teacher
 
     public bool? ConfirmationStatus { get; set; }
 
+    [ForeignKey("Id")]
+    [InverseProperty("Teacher")]
+    public virtual User IdNavigation { get; set; } = null!;
+
     [InverseProperty("Instructor")]
     public virtual ICollection<Lesson> Lessons { get; set; } = new List<Lesson>();
 

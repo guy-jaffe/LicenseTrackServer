@@ -12,5 +12,17 @@ public partial class LicenseTrackDbContext : DbContext
             .FirstOrDefault();
     }
 
+    public Student? GetStudent(int id)
+    {
+        return this.Students.Where(u => u.Id == id).Include(u => u.IdNavigation)
+            .FirstOrDefault();
+    }
+
+    public Teacher? GetTeacher(int id)
+    {
+        return this.Teachers.Where(u => u.Id == id).Include(u => u.IdNavigation)
+            .FirstOrDefault();
+    }
+
 }
 

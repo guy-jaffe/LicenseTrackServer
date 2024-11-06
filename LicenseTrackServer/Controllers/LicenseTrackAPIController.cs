@@ -33,7 +33,7 @@ public class LicenseTrackAPIController : ControllerBase
             HttpContext.Session.Clear(); //Logout any previous login attempt
 
             //Get model user class from DB with matching email. 
-            User modelsUser = context.GetUser(loginDto.UserEmail);
+            User? modelsUser = context.GetUser(loginDto.UserEmail);
 
             //Check if user exist for this email and if password match, if not return Access Denied (Error 403) 
             if (modelsUser == null || modelsUser.Pass != loginDto.UserPassword)
@@ -41,9 +41,55 @@ public class LicenseTrackAPIController : ControllerBase
                 return Unauthorized();
             }
 
+            UsersDTO dtoUser = new UsersDTO(modelsUser);
             //Login suceed! now mark login in session memory!
             HttpContext.Session.SetString("loggedInUser", modelsUser.Email);
 
+            Student? student = context.GetStudent(modelsUser.Id);
+            if (student != null)
+            {
+                //dtoUser = new StudentDto(student);
+                return Ok(new StudentDto(student));
+            }
+            else
+            {
+                Teacher? teacher = context.GetTeacher(modelsUser.Id);
+                if (teacher != null)
+                {
+                    //To be added!
+                    //dtoUser = new TeacherDto(teacher);
+                    return Ok(new TeacherDto(teacher));
+
+                }
+            }
+            
+
+            
+            //dtoUser.ProfileImagePath = GetProfileImageVirtualPath(dtoUser.Id);
+            return Ok(dtoUser);
+        }
+        catch (Exception ex)
+        {
+            return BadRequest(ex.Message);
+        }
+
+    }
+
+
+    [HttpPost("register")]
+    public IActionResult Register([FromBody] UsersDTO userDto)
+    {
+        try
+        {
+            HttpContext.Session.Clear(); //Logout any previous login attempt
+
+            //Create model user class
+            User modelsUser = userDto.GetModels();
+
+            context.Users.Add(modelsUser);
+            context.SaveChanges();
+
+            //User was added!
             UsersDTO dtoUser = new UsersDTO(modelsUser);
             //dtoUser.ProfileImagePath = GetProfileImageVirtualPath(dtoUser.Id);
             return Ok(dtoUser);
@@ -54,6 +100,7 @@ public class LicenseTrackAPIController : ControllerBase
         }
 
     }
+
 
 }
 

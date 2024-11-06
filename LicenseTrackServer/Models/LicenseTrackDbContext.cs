@@ -33,39 +33,49 @@ public partial class LicenseTrackDbContext : DbContext
     {
         modelBuilder.Entity<Lesson>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PK__lessons__3214EC07D2E3D204");
+            entity.HasKey(e => e.Id).HasName("PK__lessons__3214EC072E96BE75");
 
-            entity.HasOne(d => d.Instructor).WithMany(p => p.Lessons).HasConstraintName("FK__lessons__Instruc__2C3393D0");
+            entity.HasOne(d => d.Instructor).WithMany(p => p.Lessons).HasConstraintName("FK__lessons__Instruc__300424B4");
 
-            entity.HasOne(d => d.Student).WithMany(p => p.Lessons).HasConstraintName("FK__lessons__Student__2B3F6F97");
+            entity.HasOne(d => d.Student).WithMany(p => p.Lessons).HasConstraintName("FK__lessons__Student__2F10007B");
         });
 
         modelBuilder.Entity<Student>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PK__students__3214EC07B4764405");
+            entity.HasKey(e => e.Id).HasName("PK__students__3214EC07960CB9A6");
 
             entity.Property(e => e.Id).ValueGeneratedNever();
+            entity.Property(e => e.LicenseStatus).HasDefaultValue(0);
+
+            entity.HasOne(d => d.IdNavigation).WithOne(p => p.Student)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK__students__Id__2B3F6F97");
         });
 
         modelBuilder.Entity<Teacher>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PK__teachers__3214EC072DC68A75");
+            entity.HasKey(e => e.Id).HasName("PK__teachers__3214EC071E516612");
 
             entity.Property(e => e.Id).ValueGeneratedNever();
+            entity.Property(e => e.ConfirmationStatus).HasDefaultValue(false);
+
+            entity.HasOne(d => d.IdNavigation).WithOne(p => p.Teacher)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK__teachers__Id__276EDEB3");
         });
 
         modelBuilder.Entity<TeacherWorkHour>(entity =>
         {
-            entity.HasKey(e => new { e.TeacherId, e.DayDate, e.StartTime }).HasName("PK__teacher___D6D95F484353F219");
+            entity.HasKey(e => new { e.TeacherId, e.DayDate, e.StartTime }).HasName("PK__teacher___D6D95F489FE35B46");
 
             entity.HasOne(d => d.Teacher).WithMany(p => p.TeacherWorkHours)
                 .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK__teacher_w__Teach__2F10007B");
+                .HasConstraintName("FK__teacher_w__Teach__32E0915F");
         });
 
         modelBuilder.Entity<User>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PK__users__3214EC07DD59A349");
+            entity.HasKey(e => e.Id).HasName("PK__users__3214EC07E263FD8C");
         });
 
         OnModelCreatingPartial(modelBuilder);

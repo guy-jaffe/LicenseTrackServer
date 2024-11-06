@@ -26,22 +26,21 @@ CREATE TABLE users
 -- יצירת טבלת teachers
 CREATE TABLE teachers 
 (
-    Id INT PRIMARY KEY,
+    Id INT PRIMARY KEY REFERENCES users(Id) ,
     School_name NVARCHAR(50),
     Manual_car BIT,
     Vehicle_type NVARCHAR(50),
     Teaching_area NVARCHAR(50),
-    ConfirmationStatus BIT
+    ConfirmationStatus BIT default(0)
 );
 
 -- יצירת טבלת students
 CREATE TABLE students 
 (
-    Id INT PRIMARY KEY,
-    Lesson_count INT,
+    Id INT PRIMARY KEY REFERENCES users(Id),
     Street NVARCHAR(50),
-    License_acquisition_date DATE,
-    License_status INT -- 'בתיאוריה', 'בשיעורים', 'עם רישיון'
+    License_acquisition_date DATE NULL,
+    License_status INT default(0) -- 'בתיאוריה', 'בשיעורים', 'עם רישיון'
 );
 
 -- יצירת טבלת lessons
@@ -72,6 +71,14 @@ CREATE TABLE teacher_work_hours
 
 Insert Into users Values('email@12.com','admin', 'admin', '1234', N'הוד השרון', 'png', 1)
 Go
+
+Insert Into users Values('teacher@12.com','teacher', 'teacher', '1234', N'הוד השרון', 'png', 1)
+INSERT into teachers values(@@IDENTITY, N'בית ספר רמון', 0, N'טויוטה' ,N'הוד השרון',1)
+Go
+Insert Into users Values('student@12.com','student', 'student', '1234', N'הוד השרון', 'png', 1)
+INSERT INTO students values(@@IDENTITY, N'גולדה מאיר 10', null, 0)
+Go
+
 -- Create a login for the admin user
 CREATE LOGIN [LicenseTrackAdminLogin] WITH PASSWORD = 'admin123';
 Go

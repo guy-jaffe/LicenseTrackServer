@@ -34,4 +34,10 @@ public partial class User
     public string? FileExtension { get; set; }
 
     public bool IsManager { get; set; }
+
+    [InverseProperty("IdNavigation")]
+    public virtual Student? Student { get; set; }
+
+    [InverseProperty("IdNavigation")]
+    public virtual Teacher? Teacher { get; set; }
 }

@@ -1,18 +1,14 @@
 ﻿namespace LicenseTrackServer.DTO
 {
-    public class StudentDto
+    public class StudentDto:UsersDTO
     {
-        public int Id { get; set; }
-        public int? LessonCount { get; set; }
         public string Street { get; set; }
         public DateOnly? LicenseAcquisitionDate { get; set; }
         public int? LicenseStatus { get; set; } // Consider using an enum for better clarity
 
         public StudentDto() { }
-        public StudentDto(Models.Student modelStudent)
+        public StudentDto(Models.Student modelStudent):base(modelStudent.IdNavigation)
         {
-            this.Id = modelStudent.Id;
-            this.LessonCount = modelStudent.LessonCount;
             this.Street = modelStudent.Street;
             this.LicenseAcquisitionDate = modelStudent.LicenseAcquisitionDate;
             this.LicenseStatus = modelStudent.LicenseStatus;
@@ -23,10 +19,20 @@
             Models.Student modelStudent = new Models.Student()
             {
                 Id = this.Id,
-                LessonCount = this.LessonCount,
                 Street = this.Street,
                 LicenseAcquisitionDate = this.LicenseAcquisitionDate,
-                LicenseStatus = this.LicenseStatus
+                LicenseStatus = this.LicenseStatus,
+                IdNavigation = new Models.User()
+                {
+                    Id = this.Id,
+                    City = this.City,
+                    Email = this.Email,
+                    FirstName = this.FirstName,
+                    LastName = this.LastName,
+                    FileExtension = this.FileExtension,
+                    IsManager = this.IsManager,
+                    Pass = this.PasswordHash
+                }
             };
 
             return modelStudent;
