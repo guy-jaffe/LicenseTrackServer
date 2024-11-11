@@ -76,21 +76,46 @@ public class LicenseTrackAPIController : ControllerBase
     }
 
 
-    [HttpPost("register")]
-    public IActionResult Register([FromBody] UsersDTO userDto)
+    [HttpPost("studentRegister")]
+    public IActionResult StudentRegister([FromBody] StudentDto userDto)
     {
         try
         {
             HttpContext.Session.Clear(); //Logout any previous login attempt
 
             //Create model user class
-            User modelsUser = userDto.GetModels();
+            Student modelsUser = userDto.GetModels();
 
-            context.Users.Add(modelsUser);
+            context.Students.Add(modelsUser);
             context.SaveChanges();
 
             //User was added!
-            UsersDTO dtoUser = new UsersDTO(modelsUser);
+            StudentDto dtoUser = new StudentDto(modelsUser);
+            //dtoUser.ProfileImagePath = GetProfileImageVirtualPath(dtoUser.Id);
+            return Ok(dtoUser);
+        }
+        catch (Exception ex)
+        {
+            return BadRequest(ex.Message);
+        }
+
+    }
+
+    [HttpPost("teacherRegister")]
+    public IActionResult TeacherRegister([FromBody] TeacherDto userDto)
+    {
+        try
+        {
+            HttpContext.Session.Clear(); //Logout any previous login attempt
+
+            //Create model user class
+            Teacher modelsUser = userDto.GetModels();
+
+            context.Teachers.Add(modelsUser);
+            context.SaveChanges();
+
+            //User was added!
+            TeacherDto dtoUser = new TeacherDto(modelsUser);
             //dtoUser.ProfileImagePath = GetProfileImageVirtualPath(dtoUser.Id);
             return Ok(dtoUser);
         }
