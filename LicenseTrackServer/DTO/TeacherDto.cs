@@ -5,7 +5,6 @@
         public string SchoolName { get; set; }
         public bool? ManualCar { get; set; }
         public string VehicleType { get; set; }
-        public string TeachingArea { get; set; }
         public bool? ConfirmationStatus { get; set; }
 
 
@@ -15,7 +14,6 @@
             this.SchoolName = modelTeacher.SchoolName;
             this.ManualCar = modelTeacher.ManualCar;
             this.VehicleType = modelTeacher.VehicleType;
-            this.TeachingArea = modelTeacher.TeachingArea;
             this.ConfirmationStatus = modelTeacher.ConfirmationStatus;
         }
 
@@ -27,7 +25,6 @@
                 SchoolName = this.SchoolName,
                 ManualCar = this.ManualCar,
                 VehicleType = this.VehicleType,
-                TeachingArea = this.TeachingArea,
                 ConfirmationStatus = this.ConfirmationStatus,
                 IdNavigation = new Models.User()
                 {
