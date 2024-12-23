@@ -78,6 +78,9 @@ Go
 Insert Into users Values('student@12.com','student', 'student', '1234', N'הוד השרון', 'png', 1)
 INSERT INTO students values(@@IDENTITY, N'גולדה מאיר 10', null, 0)
 Go
+Insert Into users Values('student@123.com','student2', 'student2', '12345', N'הוד השרון', 'png', 1)
+INSERT INTO students values(@@IDENTITY, N'גולדה מאיר 8', '2024/12/20', 2)
+Go
 
 -- Create a login for the admin user
 CREATE LOGIN [LicenseTrackAdminLogin] WITH PASSWORD = 'admin123';
