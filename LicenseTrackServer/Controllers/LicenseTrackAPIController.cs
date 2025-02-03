@@ -152,5 +152,30 @@ public class LicenseTrackAPIController : ControllerBase
     }
 
 
+    [HttpPost("updateTeacher")]
+    public IActionResult UpdateTeacher([FromBody] TeacherDto userDto)
+    {
+        try
+        {
+            HttpContext.Session.Clear(); //Logout any previous login attempt
+
+            //Create model user class
+            Teacher modelsUser = userDto.GetModels();
+
+            context.Teachers.Update(modelsUser);
+            context.SaveChanges();
+
+            //User was added!
+            TeacherDto dtoUser = new TeacherDto(modelsUser);
+            //dtoUser.ProfileImagePath = GetProfileImageVirtualPath(dtoUser.Id);
+            return Ok(dtoUser);
+        }
+        catch (Exception ex)
+        {
+            return BadRequest(ex.Message);
+        }
+
+    }
+
 }
 
