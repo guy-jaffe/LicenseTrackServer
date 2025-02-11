@@ -24,5 +24,10 @@ public partial class LicenseTrackDbContext : DbContext
             .FirstOrDefault();
     }
 
+    public List<Teacher> GetTeachers(string city)
+    {
+        return Teachers.Where(t => t.TeachingArea == city).Include(t => t.IdNavigation).ToList();
+    }
+
 }
 

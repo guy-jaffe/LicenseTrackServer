@@ -177,5 +177,119 @@ public class LicenseTrackAPIController : ControllerBase
 
     }
 
+    [HttpGet("GetTeachers")]
+    public IActionResult GetTeachers()
+    {
+        try
+        {
+            //Check if user is logged in
+            string? email = HttpContext.Session.GetString("loggedInUser");
+            if (email == null)
+            {
+                return Unauthorized("User is not logged in");
+            }
+            User? user = context.GetUser(email);
+
+            if (user == null) 
+            {
+                return Unauthorized("User does not exist!");
+            }
+
+            Student? student = context.GetStudent(user.Id);
+            if (student == null)
+            {
+                return Unauthorized("User is not a student!");
+            }
+
+
+            //Create list of teacher
+            List<Teacher> teachers = context.GetTeachers(user.City);
+            //Return techrs as dto
+            List<TeacherDto> list = new List<TeacherDto>();
+            foreach (Teacher t in teachers) 
+            {
+                TeacherDto dto = new TeacherDto(t);
+                list.Add(dto);
+            }
+            
+            
+            return Ok(list);
+        }
+        catch (Exception ex)
+        {
+            return BadRequest(ex.Message);
+        }
+
+    }
+
+
+    [HttpPost("addLesson")]
+    public IActionResult AddLesson([FromBody] LessonDto lessonDto)
+    {
+        try
+        {
+            //Check if user is logged in
+            string? email = HttpContext.Session.GetString("loggedInUser");
+            if (email == null)
+            {
+                return Unauthorized("User is not logged in");
+            }
+            User? user = context.GetUser(email);
+
+            if (user == null)
+            {
+                return Unauthorized("User does not exist!");
+            }
+            //Create model lesson class
+            Lesson modelLesson = lessonDto.GetModels();
+
+            context.Lessons.Add(modelLesson);
+            context.SaveChanges();
+
+            //User was added!
+            //LessonDto dtoLesson = new LessonDto(modelLesson);
+            
+            return Ok();
+        }
+        catch (Exception ex)
+        {
+            return BadRequest(ex.Message);
+        }
+
+    }
+
+
+
+    //[HttpPost("getLessonSchedules")]
+    //public IActionResult GetLessonSchedules([FromBody] int teacherId, int month, int year)
+    //{
+    //    try
+    //    {
+    //        // חישוב תאריך התחלה וסיום של החודש המבוקש
+    //        var startDate = new DateOnly(year, month, 1);
+    //        var endDate = startDate.AddMonths(1).AddDays(-1);
+
+    //        // שליפת השיעורים של המורה בטווח התאריכים המבוקש
+    //        var lessons = context.Lessons
+    //            .Where(l => l.InstructorId == teacherId && l.LessonDate >= startDate && l.LessonDate <= endDate)
+    //            .ToList();
+
+    //        // המרת השיעורים לפורמט של LessonSchedule
+    //        var lessonSchedules = lessons.Select(l => new LessonSchedule
+    //        {
+    //            LessonDate = l.LessonDate.Value,
+    //            LessonTime = l.LessonTime.Value
+    //        }).ToList();
+
+    //        // מחזירים את התוצאה כ-Ok
+    //        return Ok(lessonSchedules);
+    //    }
+    //    catch (Exception ex)
+    //    {
+    //        // אם קרתה שגיאה, מחזירים תשובת שגיאה
+    //        return BadRequest(ex.Message);
+    //    }
+    //}
+
 }
 
