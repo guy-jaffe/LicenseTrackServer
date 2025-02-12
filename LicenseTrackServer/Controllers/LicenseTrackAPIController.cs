@@ -260,36 +260,55 @@ public class LicenseTrackAPIController : ControllerBase
 
 
 
-    //[HttpPost("getLessonSchedules")]
-    //public IActionResult GetLessonSchedules([FromBody] int teacherId, int month, int year)
-    //{
-    //    try
-    //    {
-    //        // חישוב תאריך התחלה וסיום של החודש המבוקש
-    //        var startDate = new DateOnly(year, month, 1);
-    //        var endDate = startDate.AddMonths(1).AddDays(-1);
+    [HttpPost("getAvailableLessonSchedules")]
+    public IActionResult GetAvailableLessonSchedules([FromQuery] int teacherId, int month, int year)
+    {
+        try
+        {
+            // טווח שעות העבודה של המורה
+            var workStartTime = new TimeOnly(8, 0); // 08:00
+            var workEndTime = new TimeOnly(19, 0);  // 19:00
+            var lessonDuration = TimeSpan.FromMinutes(60); // אורך שיעור
 
-    //        // שליפת השיעורים של המורה בטווח התאריכים המבוקש
-    //        var lessons = context.Lessons
-    //            .Where(l => l.InstructorId == teacherId && l.LessonDate >= startDate && l.LessonDate <= endDate)
-    //            .ToList();
+            // יצירת טווח תאריכים לחודש המבוקש
+            var startDate = new DateOnly(year, month, 1);
+            var endDate = startDate.AddMonths(1).AddDays(-1);
 
-    //        // המרת השיעורים לפורמט של LessonSchedule
-    //        var lessonSchedules = lessons.Select(l => new LessonSchedule
-    //        {
-    //            LessonDate = l.LessonDate.Value,
-    //            LessonTime = l.LessonTime.Value
-    //        }).ToList();
+            // שליפת כל השיעורים הקיימים של המורה בחודש זה
+            var bookedLessons = context.Lessons
+                .Where(l => l.InstructorId == teacherId && l.LessonDate >= startDate && l.LessonDate <= endDate)
+                .Select(l => new { l.LessonDate, l.LessonTime })
+                .ToList();
 
-    //        // מחזירים את התוצאה כ-Ok
-    //        return Ok(lessonSchedules);
-    //    }
-    //    catch (Exception ex)
-    //    {
-    //        // אם קרתה שגיאה, מחזירים תשובת שגיאה
-    //        return BadRequest(ex.Message);
-    //    }
-    //}
+            // יצירת רשימת השעות הפנויות
+            var availableSchedules = new List<LessonSchedule>();
+
+            for (var date = startDate; date <= endDate; date = date.AddDays(1))
+            {
+                for (var time = workStartTime; time < workEndTime; time = time.AddMinutes(lessonDuration.TotalMinutes))
+                {
+                    // בדיקה אם השעה כבר תפוסה
+                    bool isBooked = bookedLessons.Any(l => l.LessonDate == date && l.LessonTime == time);
+
+                    if (!isBooked)
+                    {
+                        availableSchedules.Add(new LessonSchedule
+                        {
+                            LessonDate = date,
+                            LessonTime = time
+                        });
+                    }
+                }
+            }
+
+            return Ok(availableSchedules);
+        }
+        catch (Exception ex)
+        {
+            return BadRequest(ex.Message);
+        }
+    }
+
 
 }
 
