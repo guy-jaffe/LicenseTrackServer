@@ -260,8 +260,8 @@ public class LicenseTrackAPIController : ControllerBase
 
 
 
-    [HttpPost("getAvailableLessonSchedules")]
-    public IActionResult GetAvailableLessonSchedules([FromQuery] int teacherId, int month, int year)
+    [HttpGet("getAvailableLessonSchedules")]
+    public IActionResult GetAvailableLessonSchedules([FromQuery] int teacherId, [FromQuery] int month, [FromQuery] int year)
     {
         try
         {

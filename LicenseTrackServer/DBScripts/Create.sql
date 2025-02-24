@@ -75,6 +75,11 @@ Go
 Insert Into users Values('teacher@12.com','teacher', 'teacher', '1234', N'הוד השרון', 'png', 1)
 INSERT into teachers values(@@IDENTITY, N'בית ספר רמון', 0, N'טויוטה' ,N'הוד השרון',1)
 Go
+
+Insert Into users Values('teacher@123.com','teacher2', 'teacher2', '1234', N'הוד השרון', 'png', 1)
+INSERT into teachers values(@@IDENTITY, N'בית ספר רמון', 0, N'פרארי' ,N'הוד השרון',1)
+Go
+
 Insert Into users Values('student@12.com','student', 'student', '1234', N'הוד השרון', 'png', 1)
 INSERT INTO students values(@@IDENTITY, N'גולדה מאיר 10', null, 0)
 Go
