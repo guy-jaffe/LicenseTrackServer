@@ -9,7 +9,7 @@
 
 
         public TeacherDto() { }
-        public TeacherDto(Models.Teacher modelTeacher) :base(modelTeacher.IdNavigation)
+        public TeacherDto(Models.Teacher modelTeacher, string rootPath) :base(modelTeacher.IdNavigation, rootPath)
         {
             this.SchoolName = modelTeacher.SchoolName;
             this.ManualCar = modelTeacher.ManualCar;

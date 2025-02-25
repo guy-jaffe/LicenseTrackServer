@@ -7,7 +7,7 @@
         public int? LicenseStatus { get; set; } // Consider using an enum for better clarity
 
         public StudentDto() { }
-        public StudentDto(Models.Student modelStudent):base(modelStudent.IdNavigation)
+        public StudentDto(Models.Student modelStudent, string rootPath):base(modelStudent.IdNavigation, rootPath)
         {
             this.Street = modelStudent.Street;
             this.LicenseAcquisitionDate = modelStudent.LicenseAcquisitionDate;

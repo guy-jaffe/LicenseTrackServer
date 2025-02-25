@@ -10,11 +10,12 @@
         public string City { get; set; }
         public string FileExtension { get; set; }
         public bool IsManager { get; set; }
+        public string ProfileImagePath { get; set; }
 
 
 
         public UsersDTO() { }
-        public UsersDTO(Models.User modelUser)
+        public UsersDTO(Models.User modelUser, string rootPath)
         {
             this.Id = modelUser.Id;
             this.Email = modelUser.Email;
@@ -24,6 +25,8 @@
             this.City = modelUser.City;
             this.FileExtension = modelUser.FileExtension;
             this.IsManager = modelUser.IsManager;
+            this.ProfileImagePath = GetProfileImageVirtualPath(this.Id, rootPath);
+
         }
 
         public Models.User GetModels()
@@ -41,6 +44,30 @@
             };
 
             return modelUser;
+        }
+
+        private string GetProfileImageVirtualPath(int userId, string rootPath)
+        {
+            string virtualPath = $"/profileImages/{userId}";
+            string path = $"{rootPath}\\profileImages\\{userId}.png";
+            if (System.IO.File.Exists(path))
+            {
+                virtualPath += ".png";
+            }
+            else
+            {
+                path = $"{rootPath}\\profileImages\\{userId}.jpg";
+                if (System.IO.File.Exists(path))
+                {
+                    virtualPath += ".jpg";
+                }
+                else
+                {
+                    virtualPath = $"/profileImages/default.png";
+                }
+            }
+
+            return virtualPath;
         }
     }
 }
