@@ -494,28 +494,28 @@ public class LicenseTrackAPIController : ControllerBase
         {
 
             //// בדיקה אם המשתמש מחובר
-            //string? email = HttpContext.Session.GetString("loggedInUser");
-            //if (email == null)
-            //{
-            //    return Unauthorized("User is not logged in");
-            //}
+            string? email = HttpContext.Session.GetString("loggedInUser");
+            if (email == null)
+            {
+                return Unauthorized("User is not logged in");
+            }
 
-            //User? user = context.GetUser(email);
+            User? user = context.GetUser(email);
 
-            //if (user == null)
-            //{
-            //    return Unauthorized("User does not exist!");
-            //}
+            if (user == null)
+            {
+                return Unauthorized("User does not exist!");
+            }
 
             //// אם המשתמש הוא סטודנט, נבצע חיפוש של שיעורים עתידיים
-            //Student? student = context.GetStudent(user.Id);
-            //if (student == null)
-            //{
-            //    return Unauthorized("User is not a student!");
-            //}
+            Student? student = context.GetStudent(user.Id);
+            if (student == null)
+            {
+                return Unauthorized("User is not a student!");
+            }
 
             // חיפוש השיעור לפי ID
-            var lesson = context.Lessons.FirstOrDefault(l => l.Id == lessonsId /*&& l.StudentId == user.Id*/);
+            var lesson = context.Lessons.FirstOrDefault(l => l.Id == lessonsId && l.StudentId == user.Id);
 
             // אם לא נמצא שיעור עם ID כזה, נחזיר תשובה שלא נמצא שיעור
             if (lesson == null)
