@@ -429,5 +429,114 @@ public class LicenseTrackAPIController : ControllerBase
     }
 
 
+    [HttpGet("GetFutureLessons")]
+    public IActionResult GetFutureLessons()
+    {
+        try
+        {
+            // בדיקה אם המשתמש מחובר
+            string? email = HttpContext.Session.GetString("loggedInUser");
+            if (email == null)
+            {
+                return Unauthorized("User is not logged in");
+            }
+
+            User? user = context.GetUser(email);
+
+            if (user == null)
+            {
+                return Unauthorized("User does not exist!");
+            }
+
+            // אם המשתמש הוא סטודנט, נבצע חיפוש של שיעורים עתידיים
+            Student? student = context.GetStudent(user.Id);
+            if (student == null)
+            {
+                return Unauthorized("User is not a student!");
+            }
+
+            // חיפוש שיעורים עתידיים
+            DateOnly currentDate = DateOnly.FromDateTime(DateTime.Now);
+            List<Lesson> futureLessons = context.Lessons
+                .Where(l => l.StudentId == student.Id && l.LessonDate >= currentDate)
+                .OrderBy(l => l.LessonDate)
+                .ThenBy(l => l.LessonTime)
+                .ToList();
+
+            // אם אין שיעורים עתידיים
+            if (futureLessons.Count == 0)
+            {
+                return Ok("No future lessons found");
+            }
+
+            // יצירת רשימה של שיעורים כפי שצריך להחזיר
+            List<LessonDto> lessonDtos = new List<LessonDto>();
+            foreach (Lesson lesson in futureLessons)
+            {
+                LessonDto dto = new LessonDto(lesson);
+                lessonDtos.Add(dto);
+            }
+
+            return Ok(lessonDtos);
+        }
+        catch (Exception ex)
+        {
+            return BadRequest(ex.Message);
+        }
+    }
+
+
+
+    [HttpGet("DeleteLesson")]
+    public IActionResult DeleteLesson([FromQuery] int lessonsId)
+    {
+        try
+        {
+
+            //// בדיקה אם המשתמש מחובר
+            //string? email = HttpContext.Session.GetString("loggedInUser");
+            //if (email == null)
+            //{
+            //    return Unauthorized("User is not logged in");
+            //}
+
+            //User? user = context.GetUser(email);
+
+            //if (user == null)
+            //{
+            //    return Unauthorized("User does not exist!");
+            //}
+
+            //// אם המשתמש הוא סטודנט, נבצע חיפוש של שיעורים עתידיים
+            //Student? student = context.GetStudent(user.Id);
+            //if (student == null)
+            //{
+            //    return Unauthorized("User is not a student!");
+            //}
+
+            // חיפוש השיעור לפי ID
+            var lesson = context.Lessons.FirstOrDefault(l => l.Id == lessonsId /*&& l.StudentId == user.Id*/);
+
+            // אם לא נמצא שיעור עם ID כזה, נחזיר תשובה שלא נמצא שיעור
+            if (lesson == null)
+            {
+                return NotFound("Lesson not found");
+            }
+
+            // מחיקת השיעור מהמאגר
+            context.Lessons.Remove(lesson);
+            context.SaveChanges();
+
+            return Ok("Lesson deleted successfully");
+        }
+        catch (Exception ex)
+        {
+            return BadRequest(ex.Message);
+        }
+    }
+
+
+
+
 }
 
