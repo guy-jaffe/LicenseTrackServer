@@ -488,7 +488,7 @@ public class LicenseTrackAPIController : ControllerBase
 
 
     [HttpGet("DeleteLesson")]
-    public IActionResult DeleteLesson([FromQuery] int lessonsId)
+    public IActionResult DeleteLesson([FromQuery] int lessonId)
     {
         try
         {
@@ -515,7 +515,7 @@ public class LicenseTrackAPIController : ControllerBase
             }
 
             // חיפוש השיעור לפי ID
-            var lesson = context.Lessons.FirstOrDefault(l => l.Id == lessonsId && l.StudentId == user.Id);
+            var lesson = context.Lessons.FirstOrDefault(l => l.Id == lessonId && l.StudentId == user.Id);
 
             // אם לא נמצא שיעור עם ID כזה, נחזיר תשובה שלא נמצא שיעור
             if (lesson == null)
@@ -537,6 +537,118 @@ public class LicenseTrackAPIController : ControllerBase
 
 
 
+    [HttpGet("GetPreviousLessons")]
+    public IActionResult GetPreviousLessons()
+    {
+        try
+        {
+            // בדיקה אם המשתמש מחובר
+            string? email = HttpContext.Session.GetString("loggedInUser");
+            if (email == null)
+            {
+                return Unauthorized("User is not logged in");
+            }
+
+            User? user = context.GetUser(email);
+
+            if (user == null)
+            {
+                return Unauthorized("User does not exist!");
+            }
+
+            // אם המשתמש הוא סטודנט, נבצע חיפוש של שיעורים קודמים
+            Student? student = context.GetStudent(user.Id);
+            if (student == null)
+            {
+                return Unauthorized("User is not a student!");
+            }
+
+            // חיפוש שיעורים קודמים
+            DateOnly currentDate = DateOnly.FromDateTime(DateTime.Now);
+            List<Lesson> previousLessons = context.Lessons
+                .Where(l => l.StudentId == student.Id && l.LessonDate < currentDate)
+                .OrderBy(l => l.LessonDate)
+                .ThenBy(l => l.LessonTime)
+                .ToList();
+
+            // אם אין שיעורים קודמים
+            if (previousLessons.Count == 0)
+            {
+                return Ok("No previous lessons found");
+            }
+
+            // יצירת רשימה של שיעורים כפי שצריך להחזיר
+            List<LessonDto> lessonDtos = new List<LessonDto>();
+            foreach (Lesson lesson in previousLessons)
+            {
+                LessonDto dto = new LessonDto(lesson);
+                lessonDtos.Add(dto);
+            }
+
+            return Ok(lessonDtos);
+        }
+        catch (Exception ex)
+        {
+            return BadRequest(ex.Message);
+        }
+    }
+
+
+    [HttpGet("GetTeacherFutureLessons")]
+    public IActionResult GetTeacherFutureLessons()
+    {
+        try
+        {
+            // בדיקה אם המשתמש מחובר
+            string? email = HttpContext.Session.GetString("loggedInUser");
+            if (email == null)
+            {
+                return Unauthorized("User is not logged in");
+            }
+
+            User? user = context.GetUser(email);
+
+            if (user == null)
+            {
+                return Unauthorized("User does not exist!");
+            }
+
+            // אם המשתמש הוא מורה, נבצע חיפוש של שיעורים עתידיים
+            Teacher? teacher = context.GetTeacher(user.Id);
+            if (teacher == null)
+            {
+                return Unauthorized("User is not a teacher!");
+            }
+
+            // חיפוש שיעורים עתידיים
+            DateOnly currentDate = DateOnly.FromDateTime(DateTime.Now);
+            List<Lesson> futureLessons = context.Lessons
+                .Where(l => l.InstructorId == teacher.Id && l.LessonDate >= currentDate)
+                .OrderBy(l => l.LessonDate)
+                .ThenBy(l => l.LessonTime)
+                .ToList();
+
+            // אם אין שיעורים עתידיים
+            if (futureLessons.Count == 0)
+            {
+                return Ok("No future lessons found");
+            }
+
+            // יצירת רשימה של שיעורים כפי שצריך להחזיר
+            List<LessonDto> lessonDtos = new List<LessonDto>();
+            foreach (Lesson lesson in futureLessons)
+            {
+                LessonDto dto = new LessonDto(lesson);
+                lessonDtos.Add(dto);
+            }
+
+            return Ok(lessonDtos);
+        }
+        catch (Exception ex)
+        {
+            return BadRequest(ex.Message);
+        }
+    }
 
 }
 

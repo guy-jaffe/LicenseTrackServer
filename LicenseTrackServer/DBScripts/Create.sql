@@ -80,12 +80,29 @@ Insert Into users Values('teacher@123.com','teacher2', 'teacher2', '1234', N'ה�
 INSERT into teachers values(@@IDENTITY, N'בית ספר רמון', 0, N'פרארי' ,N'הוד השרון',1)
 Go
 
-Insert Into users Values('student@12.com','student', 'student', '1234', N'הוד השרון', 'png', 1)
+Insert Into users Values('s@g.com','s', 's', '123', N'הוד השרון', 'png', 1)
 INSERT INTO students values(@@IDENTITY, N'גולדה מאיר 10', null, 0)
 Go
 Insert Into users Values('student@123.com','student2', 'student2', '12345', N'הוד השרון', 'png', 1)
 INSERT INTO students values(@@IDENTITY, N'גולדה מאיר 8', '2024/12/20', 2)
 Go
+
+Insert Into users Values('s','s', 's', '123', N'הוד השרון', 'png', 1)
+INSERT INTO students values(@@IDENTITY, N'גולדה מאיר 10', null, 0)
+Go
+
+Insert Into lessons Values('2025-03-19','09:00:00.0000000', N'שיעור רגיל', '4', '2', N'כל הכבוד')
+Go
+
+Insert Into lessons Values('2025-03-19','09:00:00.0000000', N'שיעור רגיל', '6', '2', N'כל הכבוד')
+Go
+
+Insert Into lessons Values('2025-03-19','09:00:00.0000000', N'שיעור רגיל', '7', '2', N'כל הכבוד')
+Go
+
+Insert Into lessons Values('2024-03-19','09:00:00.0000000', N'שיעור רגיל', '7', '2', N'כל הכבוד')
+Go
+
 
 -- Create a login for the admin user
 CREATE LOGIN [LicenseTrackAdminLogin] WITH PASSWORD = 'admin123';
