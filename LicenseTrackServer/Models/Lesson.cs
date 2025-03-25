@@ -25,7 +25,7 @@ public partial class Lesson
     [Column("Instructor_id")]
     public int? InstructorId { get; set; }
 
-    [Column(TypeName = "text")]
+    [StringLength(1000)]
     public string? Comments { get; set; }
 
     [ForeignKey("InstructorId")]

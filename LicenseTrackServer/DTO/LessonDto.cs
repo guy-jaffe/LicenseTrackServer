@@ -7,11 +7,12 @@
         public TimeOnly? LessonTime { get; set; }
         public string LessonType { get; set; }
         public int? StudentId { get; set; }
+        public StudentDto? Student { get; set; }
         public int? InstructorId { get; set; }
         public string? Comments { get; set; }
 
         public LessonDto() { }
-        public LessonDto(Models.Lesson modelLesson)
+        public LessonDto(Models.Lesson modelLesson, string rootPath = "")
         {
             this.Id = modelLesson.Id;
             this.LessonDate = modelLesson.LessonDate;
@@ -20,6 +21,10 @@
             this.StudentId = modelLesson.StudentId;
             this.InstructorId = modelLesson.InstructorId;
             this.Comments = modelLesson.Comments;
+            if (modelLesson.Student != null)
+            {
+                this.Student = new StudentDto(modelLesson.Student, rootPath);
+            }
         }
 
         public Models.Lesson GetModels()

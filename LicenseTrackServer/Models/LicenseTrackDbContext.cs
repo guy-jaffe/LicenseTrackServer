@@ -33,7 +33,7 @@ public partial class LicenseTrackDbContext : DbContext
     {
         modelBuilder.Entity<Lesson>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PK__lessons__3214EC072E96BE75");
+            entity.HasKey(e => e.Id).HasName("PK__lessons__3214EC0721F65A71");
 
             entity.HasOne(d => d.Instructor).WithMany(p => p.Lessons).HasConstraintName("FK__lessons__Instruc__300424B4");
 
@@ -42,7 +42,7 @@ public partial class LicenseTrackDbContext : DbContext
 
         modelBuilder.Entity<Student>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PK__students__3214EC07960CB9A6");
+            entity.HasKey(e => e.Id).HasName("PK__students__3214EC0780837A7A");
 
             entity.Property(e => e.Id).ValueGeneratedNever();
             entity.Property(e => e.LicenseStatus).HasDefaultValue(0);
@@ -54,7 +54,7 @@ public partial class LicenseTrackDbContext : DbContext
 
         modelBuilder.Entity<Teacher>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PK__teachers__3214EC071E516612");
+            entity.HasKey(e => e.Id).HasName("PK__teachers__3214EC072A9500B9");
 
             entity.Property(e => e.Id).ValueGeneratedNever();
             entity.Property(e => e.ConfirmationStatus).HasDefaultValue(false);
@@ -66,7 +66,7 @@ public partial class LicenseTrackDbContext : DbContext
 
         modelBuilder.Entity<TeacherWorkHour>(entity =>
         {
-            entity.HasKey(e => new { e.TeacherId, e.DayDate, e.StartTime }).HasName("PK__teacher___D6D95F489FE35B46");
+            entity.HasKey(e => new { e.TeacherId, e.DayDate, e.StartTime }).HasName("PK__teacher___D6D95F488590E972");
 
             entity.HasOne(d => d.Teacher).WithMany(p => p.TeacherWorkHours)
                 .OnDelete(DeleteBehavior.ClientSetNull)
@@ -75,7 +75,7 @@ public partial class LicenseTrackDbContext : DbContext
 
         modelBuilder.Entity<User>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PK__users__3214EC07E263FD8C");
+            entity.HasKey(e => e.Id).HasName("PK__users__3214EC070DF53F05");
         });
 
         OnModelCreatingPartial(modelBuilder);

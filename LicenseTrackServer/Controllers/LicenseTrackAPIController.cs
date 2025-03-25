@@ -1,6 +1,7 @@
 ﻿using LicenseTrackServer.DTO;
 using LicenseTrackServer.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 [Route("api")]
 [ApiController]
@@ -131,8 +132,6 @@ public class LicenseTrackAPIController : ControllerBase
     {
         try
         {
-            HttpContext.Session.Clear(); //Logout any previous login attempt
-
             //Create model user class
             Student modelsUser = userDto.GetModels();
 
@@ -151,14 +150,33 @@ public class LicenseTrackAPIController : ControllerBase
 
     }
 
+    [HttpPost("updateLesson")]
+    public IActionResult UpdateLesson([FromBody] LessonDto lessonDto)
+    {
+        try
+        {
+
+            //Create model user class
+            Lesson modelsLesson = lessonDto.GetModels();
+
+            context.Lessons.Update(modelsLesson);
+            context.SaveChanges();
+
+            return Ok();
+        }
+        catch (Exception ex)
+        {
+            return BadRequest(ex.Message);
+        }
+
+    }
+
 
     [HttpPost("updateTeacher")]
     public IActionResult UpdateTeacher([FromBody] TeacherDto userDto)
     {
         try
         {
-            HttpContext.Session.Clear(); //Logout any previous login attempt
-
             //Create model user class
             Teacher modelsUser = userDto.GetModels();
 
@@ -457,7 +475,7 @@ public class LicenseTrackAPIController : ControllerBase
 
             // חיפוש שיעורים עתידיים
             DateOnly currentDate = DateOnly.FromDateTime(DateTime.Now);
-            List<Lesson> futureLessons = context.Lessons
+            List<Lesson> futureLessons = context.Lessons.Include(l => l.Student).ThenInclude(s => s.IdNavigation)
                 .Where(l => l.StudentId == student.Id && l.LessonDate >= currentDate)
                 .OrderBy(l => l.LessonDate)
                 .ThenBy(l => l.LessonTime)
@@ -473,7 +491,7 @@ public class LicenseTrackAPIController : ControllerBase
             List<LessonDto> lessonDtos = new List<LessonDto>();
             foreach (Lesson lesson in futureLessons)
             {
-                LessonDto dto = new LessonDto(lesson);
+                LessonDto dto = new LessonDto(lesson, webHostEnvironment.WebRootPath);
                 lessonDtos.Add(dto);
             }
 
@@ -536,6 +554,55 @@ public class LicenseTrackAPIController : ControllerBase
     }
 
 
+    [HttpGet("TeacherDeleteLesson")]
+    public IActionResult TeacherDeleteLesson([FromQuery] int lessonId)
+    {
+        try
+        {
+
+            //// בדיקה אם המשתמש מחובר
+            string? email = HttpContext.Session.GetString("loggedInUser");
+            if (email == null)
+            {
+                return Unauthorized("User is not logged in");
+            }
+
+            User? user = context.GetUser(email);
+
+            if (user == null)
+            {
+                return Unauthorized("User does not exist!");
+            }
+
+            //// אם המשתמש הוא מורה, נבצע חיפוש של שיעורים עתידיים
+            Teacher? teacher = context.GetTeacher(user.Id);
+            if (teacher == null)
+            {
+                return Unauthorized("User is not a teacher!");
+            }
+
+            // חיפוש השיעור לפי ID
+            var lesson = context.Lessons.FirstOrDefault(l => l.Id == lessonId && l.InstructorId == user.Id);
+
+            // אם לא נמצא שיעור עם ID כזה, נחזיר תשובה שלא נמצא שיעור
+            if (lesson == null)
+            {
+                return NotFound("Lesson not found");
+            }
+
+            // מחיקת השיעור מהמאגר
+            context.Lessons.Remove(lesson);
+            context.SaveChanges();
+
+            return Ok("Lesson deleted successfully");
+        }
+        catch (Exception ex)
+        {
+            return BadRequest(ex.Message);
+        }
+    }
+
+
 
     [HttpGet("GetPreviousLessons")]
     public IActionResult GetPreviousLessons()
@@ -565,7 +632,7 @@ public class LicenseTrackAPIController : ControllerBase
 
             // חיפוש שיעורים קודמים
             DateOnly currentDate = DateOnly.FromDateTime(DateTime.Now);
-            List<Lesson> previousLessons = context.Lessons
+            List<Lesson> previousLessons = context.Lessons.Include(l => l.Student).ThenInclude(s => s.IdNavigation)
                 .Where(l => l.StudentId == student.Id && l.LessonDate < currentDate)
                 .OrderBy(l => l.LessonDate)
                 .ThenBy(l => l.LessonTime)
@@ -581,7 +648,7 @@ public class LicenseTrackAPIController : ControllerBase
             List<LessonDto> lessonDtos = new List<LessonDto>();
             foreach (Lesson lesson in previousLessons)
             {
-                LessonDto dto = new LessonDto(lesson);
+                LessonDto dto = new LessonDto(lesson, webHostEnvironment.WebRootPath);
                 lessonDtos.Add(dto);
             }
 
@@ -622,7 +689,7 @@ public class LicenseTrackAPIController : ControllerBase
 
             // חיפוש שיעורים עתידיים
             DateOnly currentDate = DateOnly.FromDateTime(DateTime.Now);
-            List<Lesson> futureLessons = context.Lessons
+            List<Lesson> futureLessons = context.Lessons.Include(l => l.Student).ThenInclude(s => s.IdNavigation)
                 .Where(l => l.InstructorId == teacher.Id && l.LessonDate >= currentDate)
                 .OrderBy(l => l.LessonDate)
                 .ThenBy(l => l.LessonTime)
@@ -638,7 +705,64 @@ public class LicenseTrackAPIController : ControllerBase
             List<LessonDto> lessonDtos = new List<LessonDto>();
             foreach (Lesson lesson in futureLessons)
             {
-                LessonDto dto = new LessonDto(lesson);
+                LessonDto dto = new LessonDto(lesson, webHostEnvironment.WebRootPath);
+                lessonDtos.Add(dto);
+            }
+
+            return Ok(lessonDtos);
+        }
+        catch (Exception ex)
+        {
+            return BadRequest(ex.Message);
+        }
+    }
+
+
+    [HttpGet("GetTeacherPreviousLessons")]
+    public IActionResult GetTeacherPreviousLessons()
+    {
+        try
+        {
+            // בדיקה אם המשתמש מחובר
+            string? email = HttpContext.Session.GetString("loggedInUser");
+            if (email == null)
+            {
+                return Unauthorized("User is not logged in");
+            }
+
+            User? user = context.GetUser(email);
+
+            if (user == null)
+            {
+                return Unauthorized("User does not exist!");
+            }
+
+            // אם המשתמש הוא מורה, נבצע חיפוש של שיעורים קודמים
+            Teacher? teacher = context.GetTeacher(user.Id);
+            if (teacher == null)
+            {
+                return Unauthorized("User is not a teacher!");
+            }
+
+            // חיפוש שיעורים קודמים
+            DateOnly currentDate = DateOnly.FromDateTime(DateTime.Now);
+            List<Lesson> previousLessons = context.Lessons.Include(l => l.Student).ThenInclude(s=>s.IdNavigation)
+                .Where(l => l.InstructorId == teacher.Id && l.LessonDate < currentDate)
+                .OrderBy(l => l.LessonDate)
+                .ThenBy(l => l.LessonTime)
+                .ToList();
+
+            // אם אין שיעורים קודמים
+            if (previousLessons.Count == 0)
+            {
+                return Ok("No previous lessons found");
+            }
+
+            // יצירת רשימה של שיעורים כפי שצריך להחזיר
+            List<LessonDto> lessonDtos = new List<LessonDto>();
+            foreach (Lesson lesson in previousLessons)
+            {
+                LessonDto dto = new LessonDto(lesson, webHostEnvironment.WebRootPath);
                 lessonDtos.Add(dto);
             }
 

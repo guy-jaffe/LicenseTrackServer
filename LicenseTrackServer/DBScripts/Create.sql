@@ -52,7 +52,7 @@ CREATE TABLE lessons
     LessonType NVARCHAR(50),
     Student_id INT,
     Instructor_id INT,
-    Comments TEXT,
+    Comments NVARCHAR(1000),
     FOREIGN KEY (Student_id) REFERENCES students(Id),
     FOREIGN KEY (Instructor_id) REFERENCES teachers(Id)
 );
@@ -73,6 +73,10 @@ Insert Into users Values('email@12.com','admin', 'admin', '1234', N'הוד הש�
 Go
 
 Insert Into users Values('teacher@12.com','teacher', 'teacher', '1234', N'הוד השרון', 'png', 1)
+INSERT into teachers values(@@IDENTITY, N'בית ספר רמון', 0, N'טויוטה' ,N'הוד השרון',1)
+Go
+
+Insert Into users Values('t','teacher', 'teacher', '123', N'הוד השרון', 'png', 0)
 INSERT into teachers values(@@IDENTITY, N'בית ספר רמון', 0, N'טויוטה' ,N'הוד השרון',1)
 Go
 
