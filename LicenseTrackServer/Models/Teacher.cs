@@ -27,7 +27,7 @@ public partial class Teacher
     [StringLength(50)]
     public string? TeachingArea { get; set; }
 
-    public bool? ConfirmationStatus { get; set; }
+    public int? ConfirmationStatus { get; set; }
 
     [ForeignKey("Id")]
     [InverseProperty("Teacher")]

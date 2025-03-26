@@ -35,6 +35,9 @@ public partial class User
 
     public bool IsManager { get; set; }
 
+    [StringLength(15)]
+    public string? PhoneNum { get; set; }
+
     [InverseProperty("IdNavigation")]
     public virtual Student? Student { get; set; }
 

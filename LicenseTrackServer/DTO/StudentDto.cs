@@ -31,7 +31,8 @@
                     LastName = this.LastName,
                     FileExtension = this.FileExtension,
                     IsManager = this.IsManager,
-                    Pass = this.PasswordHash
+                    Pass = this.PasswordHash,
+                    PhoneNum = this.PhoneNum
                 }
             };
 

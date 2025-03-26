@@ -103,7 +103,7 @@ public class LicenseTrackAPIController : ControllerBase
     }
 
     [HttpPost("teacherRegister")]
-    public IActionResult TeacherRegister([FromBody] TeacherDto userDto)
+    public IActionResult teacherRegister([FromBody] TeacherDto userDto)
     {
         try
         {
@@ -111,7 +111,6 @@ public class LicenseTrackAPIController : ControllerBase
 
             //Create model user class
             Teacher modelsUser = userDto.GetModels();
-
             context.Teachers.Add(modelsUser);
             context.SaveChanges();
 
@@ -240,6 +239,126 @@ public class LicenseTrackAPIController : ControllerBase
 
     }
 
+
+    [HttpGet("GetPendingTeachers")]
+    public IActionResult GetPendingTeachers()
+    {
+        try
+        {
+            //Check if user is logged in
+            string? email = HttpContext.Session.GetString("loggedInUser");
+            if (email == null)
+            {
+                return Unauthorized("User is not logged in");
+            }
+            User? user = context.GetUser(email);
+
+            if (user == null)
+            {
+                return Unauthorized("User does not exist!");
+            }
+
+            
+
+            //Create list of teacher
+            List<Teacher> teachers = context.GetPendingTeachers();
+            //Return techrs as dto
+            List<TeacherDto> list = new List<TeacherDto>();
+            foreach (Teacher t in teachers)
+            {
+                TeacherDto dto = new TeacherDto(t, this.webHostEnvironment.WebRootPath);
+                list.Add(dto);
+            }
+
+
+            return Ok(list);
+        }
+        catch (Exception ex)
+        {
+            return BadRequest(ex.Message);
+        }
+
+    }
+
+    [HttpGet("GetAllTeachers")]
+    public IActionResult GetAllTeachers()
+    {
+        try
+        {
+            //Check if user is logged in
+            string? email = HttpContext.Session.GetString("loggedInUser");
+            if (email == null)
+            {
+                return Unauthorized("User is not logged in");
+            }
+            User? user = context.GetUser(email);
+
+            if (user == null)
+            {
+                return Unauthorized("User does not exist!");
+            }
+
+
+
+            //Create list of teacher
+            List<Teacher> teachers = context.GetAllTeachers();
+            //Return techrs as dto
+            List<TeacherDto> list = new List<TeacherDto>();
+            foreach (Teacher t in teachers)
+            {
+                TeacherDto dto = new TeacherDto(t, this.webHostEnvironment.WebRootPath);
+                list.Add(dto);
+            }
+
+
+            return Ok(list);
+        }
+        catch (Exception ex)
+        {
+            return BadRequest(ex.Message);
+        }
+
+    }
+
+    [HttpGet("GetAllStudents")]
+    public IActionResult GetAllStudents()
+    {
+        try
+        {
+            //Check if user is logged in
+            string? email = HttpContext.Session.GetString("loggedInUser");
+            if (email == null)
+            {
+                return Unauthorized("User is not logged in");
+            }
+            User? user = context.GetUser(email);
+
+            if (user == null)
+            {
+                return Unauthorized("User does not exist!");
+            }
+
+
+
+            //Create list of Student
+            List<Student> Students = context.GetAllStudents();
+            //Return techrs as dto
+            List<StudentDto> list = new List<StudentDto>();
+            foreach (Student t in Students)
+            {
+                StudentDto dto = new StudentDto(t, this.webHostEnvironment.WebRootPath);
+                list.Add(dto);
+            }
+
+
+            return Ok(list);
+        }
+        catch (Exception ex)
+        {
+            return BadRequest(ex.Message);
+        }
+
+    }
 
     [HttpPost("addLesson")]
     public IActionResult AddLesson([FromBody] LessonDto lessonDto)

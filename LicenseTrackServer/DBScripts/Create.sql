@@ -20,7 +20,8 @@ CREATE TABLE users
     Pass NVARCHAR(50) NOT NULL,
     City NVARCHAR(50),
     File_extension NVARCHAR(50),
-    IsManager BIT NOT NULL DEFAULT 0
+    IsManager BIT NOT NULL DEFAULT 0,
+    PhoneNum NVARCHAR(15) null
 );
 
 -- יצירת טבלת teachers
@@ -31,7 +32,7 @@ CREATE TABLE teachers
     Manual_car BIT,
     Vehicle_type NVARCHAR(50),
     Teaching_area NVARCHAR(50),
-    ConfirmationStatus BIT default(0)
+    ConfirmationStatus INT default(0)
 );
 
 -- יצירת טבלת students
@@ -69,33 +70,33 @@ CREATE TABLE teacher_work_hours
 );
 
 
-Insert Into users Values('email@12.com','admin', 'admin', '1234', N'הוד השרון', 'png', 1)
+Insert Into users Values('email@12.com','admin', 'admin', '1234', N'הוד השרון', 'png', 1, '0526344450')
 Go
 
-Insert Into users Values('teacher@12.com','teacher', 'teacher', '1234', N'הוד השרון', 'png', 1)
+Insert Into users Values('teacher@12.com','teacher', 'teacher', '1234', N'הוד השרון', 'png', 1, '0526344450')
 INSERT into teachers values(@@IDENTITY, N'בית ספר רמון', 0, N'טויוטה' ,N'הוד השרון',1)
 Go
 
-Insert Into users Values('t','teacher', 'teacher', '123', N'הוד השרון', 'png', 0)
+Insert Into users Values('t','teacher', 'teacher', '123', N'הוד השרון', 'png', 0, '0526344450')
 INSERT into teachers values(@@IDENTITY, N'בית ספר רמון', 0, N'טויוטה' ,N'הוד השרון',1)
 Go
 
-Insert Into users Values('teacher@123.com','teacher2', 'teacher2', '1234', N'הוד השרון', 'png', 1)
+Insert Into users Values('teacher@123.com','teacher2', 'teacher2', '1234', N'הוד השרון', 'png', 1, '0526344450')
 INSERT into teachers values(@@IDENTITY, N'בית ספר רמון', 0, N'פרארי' ,N'הוד השרון',1)
 Go
 
-Insert Into users Values('s@g.com','s', 's', '123', N'הוד השרון', 'png', 1)
+Insert Into users Values('s@g.com','s', 's', '123', N'הוד השרון', 'png', 1, '0526344450')
 INSERT INTO students values(@@IDENTITY, N'גולדה מאיר 10', null, 0)
 Go
-Insert Into users Values('student@123.com','student2', 'student2', '12345', N'הוד השרון', 'png', 1)
+Insert Into users Values('student@123.com','student2', 'student2', '12345', N'הוד השרון', 'png', 1, '0526344450')
 INSERT INTO students values(@@IDENTITY, N'גולדה מאיר 8', '2024/12/20', 2)
 Go
 
-Insert Into users Values('s','s', 's', '123', N'הוד השרון', 'png', 1)
+Insert Into users Values('s','s', 's', '123', N'הוד השרון', 'png', 1, '0526344450')
 INSERT INTO students values(@@IDENTITY, N'גולדה מאיר 10', null, 0)
 Go
 
-Insert Into lessons Values('2025-03-19','09:00:00.0000000', N'שיעור רגיל', '4', '2', N'כל הכבוד')
+Insert Into lessons Values('2025-03-19','09:00:00.0000000', N'שיעור רגיל', 5, '2', N'כל הכבוד')
 Go
 
 Insert Into lessons Values('2025-03-19','09:00:00.0000000', N'שיעור רגיל', '6', '2', N'כל הכבוד')

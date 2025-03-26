@@ -7,10 +7,11 @@
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string PasswordHash { get; set; }
-        public string City { get; set; }
+        public string? City { get; set; }
         public string FileExtension { get; set; }
         public bool IsManager { get; set; }
         public string ProfileImagePath { get; set; }
+        public string? PhoneNum { get; set; }
 
 
 
@@ -25,6 +26,7 @@
             this.City = modelUser.City;
             this.FileExtension = modelUser.FileExtension;
             this.IsManager = modelUser.IsManager;
+            this.PhoneNum = modelUser.PhoneNum;
             this.ProfileImagePath = GetProfileImageVirtualPath(this.Id, rootPath);
 
         }
@@ -40,7 +42,8 @@
                 Pass = this.PasswordHash,
                 City = this.City,
                 FileExtension = this.FileExtension,
-                IsManager = this.IsManager
+                IsManager = this.IsManager,
+                PhoneNum = this.PhoneNum
             };
 
             return modelUser;

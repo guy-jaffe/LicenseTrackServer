@@ -29,5 +29,20 @@ public partial class LicenseTrackDbContext : DbContext
         return Teachers.Where(t => t.TeachingArea == city).Include(t => t.IdNavigation).ToList();
     }
 
+    public List<Teacher> GetPendingTeachers()
+    {
+        return Teachers.Where(t => t.ConfirmationStatus == 0).Include(t => t.IdNavigation).ToList();
+    }
+
+    public List<Teacher> GetAllTeachers()
+    {
+        return Teachers.Include(t => t.IdNavigation).ToList();
+    }
+
+    public List<Student> GetAllStudents()
+    {
+        return Students.Include(t => t.IdNavigation).ToList();
+    }
+
 }
 

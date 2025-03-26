@@ -5,7 +5,9 @@
         public string SchoolName { get; set; }
         public bool? ManualCar { get; set; }
         public string VehicleType { get; set; }
-        public bool? ConfirmationStatus { get; set; }
+        public int? ConfirmationStatus { get; set; }
+        public string TeachingArea { get; set; }
+
 
 
         public TeacherDto() { }
@@ -15,6 +17,7 @@
             this.ManualCar = modelTeacher.ManualCar;
             this.VehicleType = modelTeacher.VehicleType;
             this.ConfirmationStatus = modelTeacher.ConfirmationStatus;
+            this.TeachingArea = modelTeacher.TeachingArea;
         }
 
         public Models.Teacher GetModels()
@@ -26,6 +29,7 @@
                 ManualCar = this.ManualCar,
                 VehicleType = this.VehicleType,
                 ConfirmationStatus = this.ConfirmationStatus,
+                TeachingArea = this.TeachingArea,
                 IdNavigation = new Models.User()
                 {
                     Id = this.Id,
@@ -35,7 +39,8 @@
                     LastName = this.LastName,
                     FileExtension = this.FileExtension,
                     IsManager = this.IsManager,
-                    Pass = this.PasswordHash
+                    Pass = this.PasswordHash,
+                    PhoneNum = this.PhoneNum
                 }
             };
 
