@@ -85,6 +85,14 @@ Insert Into users Values('teacher@123.com','teacher2', 'teacher2', '1234', N'ה�
 INSERT into teachers values(@@IDENTITY, N'בית ספר רמון', 0, N'פרארי' ,N'הוד השרון',1)
 Go
 
+Insert Into users Values('teacher@1.com','t12', 't12', '123', N'הוד השרון', 'png', 1, '0526344450')
+INSERT into teachers values(@@IDENTITY, N'בית ספר רמון', 0, N'פרארי' ,N'הוד השרון',0)
+Go
+
+Insert Into users Values('teacher@3.com','t3', 't3', '123', N'הוד השרון', 'png', 1, '0526344450')
+INSERT into teachers values(@@IDENTITY, N'בית ספר רמון', 0, N'פרארי' ,N'הוד השרון',0)
+Go
+
 Insert Into users Values('s@g.com','s', 's', '123', N'הוד השרון', 'png', 1, '0526344450')
 INSERT INTO students values(@@IDENTITY, N'גולדה מאיר 10', null, 0)
 Go
@@ -106,6 +114,12 @@ Insert Into lessons Values('2025-03-19','09:00:00.0000000', N'שיעור רגי�
 Go
 
 Insert Into lessons Values('2024-03-19','09:00:00.0000000', N'שיעור רגיל', '7', '2', N'כל הכבוד')
+Go
+
+Insert Into lessons Values('2025-04-19','09:00:00.0000000', N'שיעור רגיל', '7', '2', N'כל הכבוד')
+Go
+
+Insert Into lessons Values('2025-04-23','09:00:00.0000000', N'שיעור רגיל', '7', '4', N'כל הכבוד')
 Go
 
 
