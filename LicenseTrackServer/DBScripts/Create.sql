@@ -96,6 +96,11 @@ Go
 Insert Into users Values('s@g.com','s', 's', '123', N'הוד השרון', 'png', 1, '0526344450')
 INSERT INTO students values(@@IDENTITY, N'גולדה מאיר 10', null, 0)
 Go
+
+Insert Into users Values('s@g2.com','s', 's', '123', N'הוד השרון', 'png', 1, '0526344450')
+INSERT INTO students values(@@IDENTITY, N'גולדה מאיר 10', null, 0)
+Go
+
 Insert Into users Values('student@123.com','student2', 'student2', '12345', N'הוד השרון', 'png', 1, '0526344450')
 INSERT INTO students values(@@IDENTITY, N'גולדה מאיר 8', '2024/12/20', 2)
 Go
@@ -103,6 +108,15 @@ Go
 Insert Into users Values('s','s', 's', '123', N'הוד השרון', 'png', 1, '0526344450')
 INSERT INTO students values(@@IDENTITY, N'גולדה מאיר 10', null, 0)
 Go
+
+Insert Into users Values('s2','s', 's', '123', N'הוד השרון', 'png', 1, '0526344450')
+INSERT INTO students values(@@IDENTITY, N'גולדה מאיר 10', null, 0)
+Go
+
+Insert Into users Values('s3','s', 's', '123', N'הוד השרון', 'png', 1, '0526344450')
+INSERT INTO students values(@@IDENTITY, N'גולדה מאיר 10', null, 0)
+Go
+
 
 Insert Into lessons Values('2025-03-19','09:00:00.0000000', N'שיעור רגיל', 5, '2', N'כל הכבוד')
 Go
