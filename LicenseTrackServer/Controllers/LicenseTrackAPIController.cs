@@ -1,6 +1,7 @@
 ﻿using LicenseTrackServer.DTO;
 using LicenseTrackServer.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 
 [Route("api")]
@@ -594,7 +595,7 @@ public class LicenseTrackAPIController : ControllerBase
 
             // חיפוש שיעורים עתידיים
             DateOnly currentDate = DateOnly.FromDateTime(DateTime.Now);
-            List<Lesson> futureLessons = context.Lessons.Include(l => l.Student).ThenInclude(s => s.IdNavigation)
+            List<Lesson> futureLessons = context.Lessons.Include(l=>l.Instructor).ThenInclude(t=>t.IdNavigation).Include(l => l.Student).ThenInclude(s => s.IdNavigation)
                 .Where(l => l.StudentId == student.Id && l.LessonDate >= currentDate)
                 .OrderBy(l => l.LessonDate)
                 .ThenBy(l => l.LessonTime)
@@ -751,7 +752,7 @@ public class LicenseTrackAPIController : ControllerBase
 
             // חיפוש שיעורים קודמים
             DateOnly currentDate = DateOnly.FromDateTime(DateTime.Now);
-            List<Lesson> previousLessons = context.Lessons.Include(l => l.Student).ThenInclude(s => s.IdNavigation)
+            List<Lesson> previousLessons = context.Lessons.Include(l => l.Instructor).ThenInclude(t => t.IdNavigation).Include(l => l.Student).ThenInclude(s => s.IdNavigation)
                 .Where(l => l.StudentId == student.Id && l.LessonDate < currentDate)
                 .OrderBy(l => l.LessonDate)
                 .ThenBy(l => l.LessonTime)
@@ -892,6 +893,128 @@ public class LicenseTrackAPIController : ControllerBase
             return BadRequest(ex.Message);
         }
     }
+
+    #region Backup / Restore
+    [HttpGet("Backup")]
+    public async Task<IActionResult> Backup()
+    {
+        string path = $"{this.webHostEnvironment.WebRootPath}\\..\\DBScripts\\backup.bak";
+        try
+        {
+            System.IO.File.Delete(path);
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine(ex.Message);
+        }
+        bool success = await BackupDatabaseAsync(path);
+        if (success)
+        {
+            return Ok("Backup was successful");
+        }
+        else
+        {
+            return BadRequest("Backup failed");
+        }
+    }
+
+    [HttpGet("Restore")]
+    public async Task<IActionResult> Restore()
+    {
+        string path = $"{this.webHostEnvironment.WebRootPath}\\..\\DBScripts\\backup.bak";
+
+        bool success = await RestoreDatabaseAsync(path);
+        if (success)
+        {
+            return Ok("Restore was successful");
+        }
+        else
+        {
+            return BadRequest("Restore failed");
+        }
+    }
+    //this function backup the database to a specified path
+    private async Task<bool> BackupDatabaseAsync(string path)
+    {
+        try
+        {
+
+            //Get the connection string
+            string? connectionString = context.Database.GetConnectionString();
+            //Get the database name
+            string databaseName = context.Database.GetDbConnection().Database;
+            //Build the backup command
+            string command = $"BACKUP DATABASE {databaseName} TO DISK = '{path}'";
+            //Create a connection to the database
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                //Open the connection
+                await connection.OpenAsync();
+                //Create a command
+                using (SqlCommand sqlCommand = new SqlCommand(command, connection))
+                {
+                    //Execute the command
+                    await sqlCommand.ExecuteNonQueryAsync();
+                }
+            }
+            return true;
+        }
+        catch (Exception ex)
+        {
+            return false;
+        }
+
+    }
+
+    //THis function restore the database from a backup in a certain path
+    private async Task<bool> RestoreDatabaseAsync(string path)
+    {
+        try
+        {
+            //Get the connection string
+            string? connectionString = context.Database.GetConnectionString();
+            //Get the database name
+            string databaseName = context.Database.GetDbConnection().Database;
+            //Build the restore command
+            string command = $@"
+               USE master;
+               DECLARE @latestBackupSet INT;
+               SELECT TOP 1 @latestBackupSet = position
+               FROM msdb.dbo.backupset
+               WHERE database_name = '{databaseName}'
+               AND backup_set_id IN (
+                     SELECT backup_set_id
+                     FROM msdb.dbo.backupmediafamily
+                     WHERE physical_device_name = '{path}'
+                 )
+               ORDER BY backup_start_date DESC;
+                ALTER DATABASE {databaseName} SET SINGLE_USER WITH ROLLBACK IMMEDIATE;
+                RESTORE DATABASE {databaseName} FROM DISK = '{path}' 
+                WITH FILE=@latestBackupSet,
+                REPLACE;
+                ALTER DATABASE {databaseName} SET MULTI_USER;";
+
+            //Create a connection to the database
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                //Open the connection
+                await connection.OpenAsync();
+                //Create a command
+                using (SqlCommand sqlCommand = new SqlCommand(command, connection))
+                {
+                    //Execute the command
+                    await sqlCommand.ExecuteNonQueryAsync();
+                }
+            }
+            return true;
+        }
+        catch (Exception ex)
+        {
+            return false;
+        }
+
+    }
+    #endregion
 
 }
 

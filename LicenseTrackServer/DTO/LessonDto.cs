@@ -9,6 +9,8 @@
         public int? StudentId { get; set; }
         public StudentDto? Student { get; set; }
         public int? InstructorId { get; set; }
+        public TeacherDto? Instructor { get; set; }
+
         public string? Comments { get; set; }
 
         public LessonDto() { }
@@ -25,6 +27,11 @@
             {
                 this.Student = new StudentDto(modelLesson.Student, rootPath);
             }
+            if (modelLesson.Instructor != null)
+            {
+                this.Instructor = new TeacherDto(modelLesson.Instructor, rootPath);
+            }
+
         }
 
         public Models.Lesson GetModels()
