@@ -58,6 +58,9 @@ public class LicenseTrackAPIController : ControllerBase
                 Teacher? teacher = context.GetTeacher(modelsUser.Id);
                 if (teacher != null)
                 {
+                    if (teacher.ConfirmationStatus == 2)
+                        return Unauthorized();
+                    
                     //To be added!
                     //dtoUser = new TeacherDto(teacher);
                     return Ok(new TeacherDto(teacher, this.webHostEnvironment.WebRootPath));

@@ -149,6 +149,8 @@ Go
 ALTER ROLE db_owner ADD MEMBER [LicenseTrackAdminUser];
 Go
 
+update users set email = 'guyjaffe28@gmail.com' where id = 6
+update teachers set ConfirmationStatus = 0 where id = 6
 select * from users
 select * from students
 select * from teachers

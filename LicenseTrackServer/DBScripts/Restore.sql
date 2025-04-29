@@ -1,5 +1,4 @@
-﻿﻿-- REPLACE YOUR DATABASE NAME, LOGIN AND PASSWORD IN THE SCRIPT BELOW
-
+﻿
 USE master;
 GO
 
@@ -41,3 +40,21 @@ Go
 
 CREATE Database LicenseTrackDB;
 Go
+
+
+               --USE master;
+               --DECLARE @latestBackupSet INT;
+               --SELECT *
+               --FROM msdb.dbo.backupset
+               --WHERE database_name = 'LicenseTrackDB'
+               --AND backup_set_id IN (
+               --      SELECT backup_set_id
+               --      FROM msdb.dbo.backupmediafamily
+               --      WHERE physical_device_name = 'C:\Users\User\Source\Repos\LicenseTrackServer\LicenseTrackServer\wwwroot\..\DBScripts\backup.bak'
+               --  )
+               --ORDER BY backup_start_date DESC;
+               -- ALTER DATABASE LicenseTrackDB SET SINGLE_USER WITH ROLLBACK IMMEDIATE;
+               -- RESTORE DATABASE LicenseTrackDB FROM DISK = 'C:\Users\User\Source\Repos\LicenseTrackServer\LicenseTrackServer\wwwroot\..\DBScripts\backup.bak' 
+               -- WITH FILE=@latestBackupSet,
+               -- REPLACE;
+               -- ALTER DATABASE LicenseTrackDB SET MULTI_USER;
