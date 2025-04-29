@@ -150,6 +150,8 @@ ALTER ROLE db_owner ADD MEMBER [LicenseTrackAdminUser];
 Go
 
 update users set email = 'guyjaffe28@gmail.com' where id = 6
+update users set First_name = 'guy' where id = 6
+update users set Last_name = 'jaffe' where id = 6
 update teachers set ConfirmationStatus = 0 where id = 6
 select * from users
 select * from students
