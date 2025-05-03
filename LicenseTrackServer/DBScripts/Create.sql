@@ -152,7 +152,10 @@ Go
 update users set email = 'guyjaffe28@gmail.com' where id = 6
 update users set First_name = 'guy' where id = 6
 update users set Last_name = 'jaffe' where id = 6
-update teachers set ConfirmationStatus = 0 where id = 6
+update teachers set ConfirmationStatus = 1 where id = 6
+update users set First_name = 'ori' where id = 10
+update users set Last_name = 'cohen' where id = 10
+
 select * from users
 select * from students
 select * from teachers
