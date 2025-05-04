@@ -149,12 +149,16 @@ Go
 ALTER ROLE db_owner ADD MEMBER [LicenseTrackAdminUser];
 Go
 
-update users set email = 'guyjaffe28@gmail.com' where id = 6
-update users set First_name = 'guy' where id = 6
-update users set Last_name = 'jaffe' where id = 6
+update users set email = 'elad@gmail.com' where id = 13
+update users set First_name = 'elad' where id = 13
+update users set Last_name = 'jaffe' where id = 13
 update teachers set ConfirmationStatus = 1 where id = 6
 update users set First_name = 'ori' where id = 10
 update users set Last_name = 'cohen' where id = 10
+update lessons set Instructor_id = '6' where id = 5
+update students set License_acquisition_date = '2025-04-03' where id = 10
+
+
 
 select * from users
 select * from students
