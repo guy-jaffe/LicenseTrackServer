@@ -70,71 +70,104 @@ CREATE TABLE teacher_work_hours
 );
 
 
-Insert Into users Values('email@12.com','admin', 'admin', '1234', N'הוד השרון', 'png', 1, '0526344450')
+Insert Into users Values('guy.jaffe@gmail.com','guy', 'jaffe', 'guy123', N'הוד השרון', 'png', 0, '0526344450')
+INSERT INTO students values(@@IDENTITY, N'גולדה מאיר 10', null, 0)
 Go
 
-Insert Into users Values('teacher@12.com','teacher', 'teacher', '1234', N'הוד השרון', 'png', 1, '0526344450')
+Insert Into users Values('ori.erlichman@gmail.com','ori', 'erlichman', 'ori123', N'הוד השרון', 'png', 0, '0526344450')
+INSERT INTO students values(@@IDENTITY, N'גולדה מאיר 8', null, 1)
+Go
+
+Insert Into users Values('dan.bentov@gmail.com','dan', 'bentov', 'dan123', N'הוד השרון', 'png', 0, '0526344450')
+INSERT INTO students values(@@IDENTITY, N'גולדה מאיר 6', '2025-05-19', 2)
+Go
+
+Insert Into users Values('ran.nurieli@gmail.com','ran', 'nurieli', 'ran123', N'הוד השרון', 'png', 0, '0526344450')
 INSERT into teachers values(@@IDENTITY, N'בית ספר רמון', 0, N'טויוטה' ,N'הוד השרון',1)
 Go
 
-Insert Into users Values('t','teacher', 'teacher', '123', N'הוד השרון', 'png', 0, '0526344450')
-INSERT into teachers values(@@IDENTITY, N'בית ספר רמון', 0, N'טויוטה' ,N'הוד השרון',1)
-Go
-
-Insert Into users Values('teacher@123.com','teacher2', 'teacher2', '1234', N'הוד השרון', 'png', 1, '0526344450')
-INSERT into teachers values(@@IDENTITY, N'בית ספר רמון', 0, N'פרארי' ,N'הוד השרון',1)
-Go
-
-Insert Into users Values('teacher@1.com','t12', 't12', '123', N'הוד השרון', 'png', 1, '0526344450')
-INSERT into teachers values(@@IDENTITY, N'בית ספר רמון', 0, N'פרארי' ,N'הוד השרון',0)
-Go
-
-Insert Into users Values('teacher@3.com','t3', 't3', '123', N'הוד השרון', 'png', 1, '0526344450')
-INSERT into teachers values(@@IDENTITY, N'בית ספר רמון', 0, N'פרארי' ,N'הוד השרון',0)
-Go
-
-Insert Into users Values('s@g.com','s', 's', '123', N'הוד השרון', 'png', 1, '0526344450')
-INSERT INTO students values(@@IDENTITY, N'גולדה מאיר 10', null, 0)
-Go
-
-Insert Into users Values('s@g2.com','s', 's', '123', N'הוד השרון', 'png', 1, '0526344450')
-INSERT INTO students values(@@IDENTITY, N'גולדה מאיר 10', null, 0)
-Go
-
-Insert Into users Values('student@123.com','student2', 'student2', '12345', N'הוד השרון', 'png', 1, '0526344450')
-INSERT INTO students values(@@IDENTITY, N'גולדה מאיר 8', '2024/12/20', 2)
-Go
-
-Insert Into users Values('s','s', 's', '123', N'הוד השרון', 'png', 1, '0526344450')
-INSERT INTO students values(@@IDENTITY, N'גולדה מאיר 10', null, 0)
-Go
-
-Insert Into users Values('s2','s', 's', '123', N'הוד השרון', 'png', 1, '0526344450')
-INSERT INTO students values(@@IDENTITY, N'גולדה מאיר 10', null, 0)
-Go
-
-Insert Into users Values('s3','s', 's', '123', N'הוד השרון', 'png', 1, '0526344450')
-INSERT INTO students values(@@IDENTITY, N'גולדה מאיר 10', null, 0)
+Insert Into users Values('noam.haner@gmail.com','noam', 'haner', 'noam123', N'הוד השרון', 'png', 1, '0526344450')
 Go
 
 
-Insert Into lessons Values('2025-03-19','09:00:00.0000000', N'שיעור רגיל', 5, '2', N'כל הכבוד')
+
+Insert Into users Values('elad.jaffe@gmail.com','elad', 'jaffe', 'elad123', N'הוד השרון', 'png', 0, '0526344450')
+INSERT INTO students values(@@IDENTITY, N'גולדה מאיר 5', null, 1)
 Go
 
-Insert Into lessons Values('2025-03-19','09:00:00.0000000', N'שיעור רגיל', '6', '2', N'כל הכבוד')
+Insert Into users Values('amit.chacham@gmail.com','amit', 'chacham', 'amit123', N'הוד השרון', 'png', 0, '0526344450')
+INSERT INTO students values(@@IDENTITY, N'גולדה מאיר 4', null, 1)
 Go
 
-Insert Into lessons Values('2025-03-19','09:00:00.0000000', N'שיעור רגיל', '7', '2', N'כל הכבוד')
+Insert Into users Values('roee.naim@gmail.com','roee', 'naim', 'roee123', N'הוד השרון', 'png', 0, '0526344450')
+INSERT into teachers values(@@IDENTITY, N'בית ספר מוסינזון', 1, N'מרצדס' ,N'הוד השרון',1)
 Go
 
-Insert Into lessons Values('2024-03-19','09:00:00.0000000', N'שיעור רגיל', '7', '2', N'כל הכבוד')
+Insert Into users Values('liam.tartazki@gmail.com','liam', 'tartazki', 'liam123', N'הוד השרון', 'png', 0, '0526344450')
+INSERT into teachers values(@@IDENTITY, N'בית ספר עתידים', 0, N'סוזוקי' ,N'הוד השרון',1)
 Go
 
-Insert Into lessons Values('2025-04-19','09:00:00.0000000', N'שיעור רגיל', '7', '2', N'כל הכבוד')
+Insert Into users Values('alon.nahum@gmail.com','alon', 'nahum', 'alon123', N'הוד השרון', 'png', 0, '0526344450')
+INSERT into teachers values(@@IDENTITY, N'בית ספר בגין', 1, N'ב.מ.ו' ,N'הוד השרון',1)
 Go
 
-Insert Into lessons Values('2025-04-23','09:00:00.0000000', N'שיעור רגיל', '7', '4', N'כל הכבוד')
+Insert Into lessons Values('2025-05-25','09:00:00.0000000', N'שיעור רגיל', 2, '4', N'כל הכבוד')
 Go
+
+Insert Into lessons Values('2025-05-24','10:00:00.0000000', N'שיעור רגיל', 6, '4', N'מעולה')
+Go
+
+Insert Into lessons Values('2025-05-23','10:00:00.0000000', N'שיעור רגיל', 7, '4', N'מעולה')
+Go
+
+Insert Into lessons Values('2025-05-22','11:00:00.0000000', N'שיעור רגיל', 2, '4', N'אלוף')
+Go
+
+Insert Into lessons Values('2025-05-19','10:00:00.0000000', N'שיעור רגיל', 2, '4', N'מעולה')
+Go
+
+Insert Into lessons Values('2025-06-23','09:00:00.0000000', N'שיעור רגיל', 2, '4', N'כל הכבוד')
+Go
+
+Insert Into lessons Values('2025-06-22','10:00:00.0000000', N'שיעור רגיל', 6, '4', N'מעולה')
+Go
+
+Insert Into lessons Values('2025-06-21','10:00:00.0000000', N'שיעור רגיל', 7, '4', N'מעולה')
+Go
+
+Insert Into lessons Values('2025-06-20','11:00:00.0000000', N'שיעור רגיל', 2, '4', N'אלוף')
+Go
+
+Insert Into lessons Values('2025-06-19','10:00:00.0000000', N'שיעור רגיל', 2, '4', N'מעולה')
+Go
+
+UPDATE lessons
+SET Comments=null
+WHERE Id='6';
+
+UPDATE lessons
+SET Comments=null
+WHERE Id='7';
+
+UPDATE lessons
+SET Comments=null
+WHERE Id='8';
+
+UPDATE lessons
+SET Comments=null
+WHERE Id='9';
+
+UPDATE lessons
+SET Comments=null
+WHERE Id='10';
+
+
+
+
+
+
+
+
 
 
 -- Create a login for the admin user
@@ -149,14 +182,9 @@ Go
 ALTER ROLE db_owner ADD MEMBER [LicenseTrackAdminUser];
 Go
 
-update users set email = 'elad@gmail.com' where id = 13
-update users set First_name = 'elad' where id = 13
-update users set Last_name = 'jaffe' where id = 13
-update teachers set ConfirmationStatus = 1 where id = 6
-update users set First_name = 'ori' where id = 10
-update users set Last_name = 'cohen' where id = 10
-update lessons set Instructor_id = '6' where id = 5
-update students set License_acquisition_date = '2025-04-03' where id = 10
+
+
+
 
 
 
