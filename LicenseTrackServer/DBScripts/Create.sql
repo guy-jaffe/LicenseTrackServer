@@ -111,6 +111,10 @@ Insert Into users Values('alon.nahum@gmail.com','alon', 'nahum', 'alon123', N'ה
 INSERT into teachers values(@@IDENTITY, N'בית ספר בגין', 1, N'ב.מ.ו' ,N'הוד השרון',1)
 Go
 
+Insert Into users Values('tali.nissim@gmail.com','tali', 'nissim', 'tali123', N'הוד השרון', 'png', 0, '0526344450')
+INSERT into teachers values(@@IDENTITY, N'בית ספר בגין', 1, N'ב.מ.ו' ,N'הוד השרון',0)
+Go
+
 Insert Into lessons Values('2025-05-25','09:00:00.0000000', N'שיעור רגיל', 2, '4', N'כל הכבוד')
 Go
 
