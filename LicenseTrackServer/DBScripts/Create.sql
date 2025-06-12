@@ -111,7 +111,7 @@ Insert Into users Values('alon.nahum@gmail.com','alon', 'nahum', 'alon123', N'ה
 INSERT into teachers values(@@IDENTITY, N'בית ספר בגין', 1, N'ב.מ.ו' ,N'הוד השרון',1)
 Go
 
-Insert Into users Values('tali.nissim@gmail.com','tali', 'nissim', 'tali123', N'הוד השרון', 'png', 0, '0526344450')
+Insert Into users Values('guyjaffe28@gmail.com','tali', 'nissim', 'tali123', N'הוד השרון', 'png', 0, '0526344450')
 INSERT into teachers values(@@IDENTITY, N'בית ספר בגין', 1, N'ב.מ.ו' ,N'הוד השרון',0)
 Go
 
